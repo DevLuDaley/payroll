@@ -39,12 +39,18 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-hateoas</artifactId>
 		</dependency>
-		<!-- 
+
 		<dependency>
-			<groupId>org.springframework.hateoas</groupId>
-			<artifactId>spring-hateoas</artifactId>
-			<version>1.3.4</version>
-		</dependency> -->
+			<groupId>com.jalalkiswani</groupId>
+			<artifactId>smart-cloud-metadata-models</artifactId>
+			<version>4.0.6</version>
+		</dependency>
+
+		<dependency>
+			<groupId>mx.com.inftel.codegen</groupId>
+			<artifactId>codegen-apt</artifactId>
+			<version>1.0.7</version>
+		</dependency>
 	</dependencies>
 
 	<build>

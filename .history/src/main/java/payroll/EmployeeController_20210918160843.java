@@ -1,7 +1,6 @@
 package payroll;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 // import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 
@@ -24,12 +23,8 @@ class EmployeeController {
 
     private final EmployeeRepository repository;
 
-    private final EmployeeModelAssembler assembler;
-
-    // EmployeeController(EmployeeRepository repository) {
-    EmployeeController(EmployeeRepository repository, EmployeeModelAssembler assembler) {
+    EmployeeController(EmployeeRepository repository) {
         this.repository = repository;
-        this.assembler = assembler;
     }
 
     // Aggregate root
@@ -66,29 +61,18 @@ class EmployeeController {
     // .orElseThrow(() -> new EmployeeNotFoundException(id));
     // }
 
-    // @GetMapping("/employees/{id}")
-    // EntityModel<Employee> one(@PathVariable Long id) {
-
-    // Employee employee = repository.findById(id) //
-    // .orElseThrow(() -> new EmployeeNotFoundException(id));
-
-    // return EntityModel.of(employee, //
-    // linkTo(methodOn(EmployeeController.class).one(id)).withSelfRel(),
-    // linkTo(methodOn(EmployeeController.class).all()).withRel("employees"));
-    // //
-    // WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EmployeeController.class).one(id)).withSelfRel(),
-    // //
-    // WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EmployeeController.class).all())
-    // // .withRel("employees"));
-    // }
-
     @GetMapping("/employees/{id}")
     EntityModel<Employee> one(@PathVariable Long id) {
 
         Employee employee = repository.findById(id) //
                 .orElseThrow(() -> new EmployeeNotFoundException(id));
 
-        return assembler.toModel(employee);
+        return EntityModel.of(employee, //
+                linkTo(methodOn(EmployeeController.class).one(id)).withSelfRel(),
+                linkTo(methodOn(EmployeeController.class).all()).withRel("employees"));
+        // WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EmployeeController.class).one(id)).withSelfRel(),
+        // WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(EmployeeController.class).all())
+        // .withRel("employees"));
     }
 
     @PutMapping("/employees/{id}")
